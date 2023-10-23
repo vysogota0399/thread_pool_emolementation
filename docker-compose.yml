@@ -1,0 +1,24 @@
+version: "3.9"
+
+x-default_service: &default_service
+  build:
+    context: .
+  tty: true
+  stdin_open: true
+
+services:
+  server:
+    <<: *default_service
+    command: bundle exec rackup --host=0.0.0.0 -p 3000
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 3000:3000
+
+  client:
+    <<: *default_service
+    volumes:
+      - .:/usr/src/app
+    tty: true
+    stdin_open: true
+
